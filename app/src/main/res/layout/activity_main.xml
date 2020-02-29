@@ -6,13 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+    <Spinner
+        android:id="@+id/spSort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/sortArray"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/row_textview_margin"
+      />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEmpData"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/row_textview_margin"
+        app:layout_constraintTop_toBottomOf="@+id/spSort"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

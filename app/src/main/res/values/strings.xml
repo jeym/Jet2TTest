@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Jet2Test</string>
+    <string-array name="sortArray">
+        <item>Name</item>
+        <item>Age</item>
+    </string-array>
 </resources>

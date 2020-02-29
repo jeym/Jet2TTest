@@ -2,7 +2,7 @@
 <resources>
     <dimen name="row_textview_margin">10dp</dimen>
     <dimen name="row_emp_textsize">16sp</dimen>
+    <dimen name="detail_view_margin">50dp</dimen>
     <dimen name="image_width">60dp</dimen>
     <dimen name="image_height">60dp</dimen>
-
 </resources>
