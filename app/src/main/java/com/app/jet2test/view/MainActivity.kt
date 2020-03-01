@@ -1,7 +1,6 @@
 package com.app.jet2test.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,13 +11,16 @@ import com.app.jet2test.R
 import com.app.jet2test.adapters.EmpAdapter
 import com.app.jet2test.model.EmpDataModel
 import com.app.jet2test.viewmodel.EmpViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.Comparator
 
 
 class MainActivity : AppCompatActivity() {
-
 
     private var empViewModel : EmpViewModel ?= null
     private var empAdapter : EmpAdapter ?= null
@@ -28,14 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         empViewModel=ViewModelProviders.of(this).get(EmpViewModel::class.java)
-        empViewModel?.getEmpData()?.observe(this@MainActivity, Observer {
-            listEmp= it.empList
-            sort("Name",listEmp)
-            setUpRecylerView(listEmp)
-        })
-
+        getEmpData()
         spSort?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -49,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 setUpRecylerView(listEmp)
             }
         }
-
     }
 
     fun setUpRecylerView(listEmp : MutableList<EmpDataModel>){
@@ -72,5 +67,29 @@ class MainActivity : AppCompatActivity() {
             })
         }
         return listEmp
+    }
+
+
+
+    fun getEmpData(){
+        GlobalScope.launch(Dispatchers.Main) {
+            // call to UI thread
+            empViewModel?.isOnline()?.observe(this@MainActivity, Observer {
+                it?.let {
+                    if(it) {
+                        empViewModel?.getEmpData()?.observe(this@MainActivity, Observer {
+                            listEmp= it.empList
+                            sort("Name",listEmp)
+                            setUpRecylerView(listEmp)
+
+                        })
+                    }else{
+                        val snackbar: Snackbar = Snackbar
+                            .make(rootConstraint, "Sorry, You're Offline", Snackbar.LENGTH_LONG)
+                        snackbar.show()
+                    }
+                }
+            })
+        }
     }
 }

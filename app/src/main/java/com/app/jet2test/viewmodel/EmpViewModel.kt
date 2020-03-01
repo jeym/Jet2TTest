@@ -23,4 +23,7 @@ class EmpViewModel(application: Application) : AndroidViewModel(application){
         return empRepository.getEmpData()!!
     }
 
+    fun isOnline() : MutableLiveData<Boolean>{
+        return empRepository.isOnline()!!
+    }
 }

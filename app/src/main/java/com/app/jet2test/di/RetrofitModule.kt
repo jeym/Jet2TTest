@@ -1,6 +1,9 @@
 package com.app.jet2test.di
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -15,7 +18,7 @@ import javax.inject.Singleton
 
 
 @Module
-class RetrofitModule(private val application: Application,private val mBaseUrl: String?){
+open class RetrofitModule(private val application: Application, private val mBaseUrl: String?){
 
     @Provides
     @Singleton
@@ -54,9 +57,8 @@ class RetrofitModule(private val application: Application,private val mBaseUrl: 
             .build()
     }
 
-
-
-
-
-
+    @Provides
+    fun provideConnectivityManager() : ConnectivityManager{
+        return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 }
