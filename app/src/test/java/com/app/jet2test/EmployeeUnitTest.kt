@@ -29,7 +29,7 @@ import javax.inject.Inject
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class EmployeeUnitTest {
 
 
     @Mock
